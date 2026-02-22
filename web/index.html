@@ -1,0 +1,68 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT HUD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="voice"></div>
+    <div id="minimap-border"></div>
+    <div id="player-hud-wrapper">
+        <div id="voice-vertical-container" class="vertical-bar-container">
+            <div id="voice-fill" class="vertical-fill"></div>
+        </div>
+        <div id="hud-main-content">
+            <div id="boxes-row">
+                <div id="health-box" class="hud-box"><i class="fas fa-heart"></i>
+                    <div id="health" class="box-fill"></div>
+                </div>
+                <div id="armor-box" class="hud-box"><i class="fas fa-shield"></i>
+                    <div id="armor" class="box-fill"></div>
+                </div>
+                <div id="hunger-box" class="hud-box"><i class="fas fa-apple-whole"></i>
+                    <div id="hunger" class="box-fill"></div>
+                </div>
+                <div id="thirst-box" class="hud-box"><i class="fas fa-glass-martini-alt"></i>
+                    <div id="thirst" class="box-fill"></div>
+                </div>
+            </div>
+            <div id="stamina-bar" class="horizontal-bar-container">
+                <div id="stamina" class="horizontal-fill"></div>
+            </div>
+        </div>
+    </div>
+    <div id="vehicle-hud-container">
+        <div id="gear-side">
+            <span id="gear-val">N</span>
+            <div id="gear-bar-vertical">
+                <div class="gear-segment"></div>
+                <div class="gear-segment"></div>
+                <div class="gear-segment"></div>
+                <div class="gear-segment"></div>
+                <div class="gear-segment"></div>
+            </div>
+        </div>
+        <div id="speed-main">
+            <span id="speed">000</span>
+        </div>
+        <div id="status-side">
+            <div id="icons-row">
+                <div id="seatbelt-info" class="info-box"><i class="fas fa-user-slash"></i></div>
+                <div id="fuel-box" class="info-box fuel-info"><i class="fas fa-gas-pump"></i> <span
+                        id="fuel-val">100%</span></div>
+            </div>
+            <div id="location-row">
+                <i class="fas fa-location-dot"></i> <span id="street1">Strawberry Avenue</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

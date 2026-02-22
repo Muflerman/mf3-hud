@@ -1,0 +1,384 @@
+@import url('https://fonts.cdnfonts.com/css/alarm-clock');
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+#player-hud-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    /* Default position */
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    transition: left 0.5s ease-in-out;
+    /* Smooth slide */
+    z-index: 100;
+}
+
+#player-hud-wrapper.map-active {
+    left: 350px;
+    /* Increased to avoid overlap with new map border */
+}
+
+#minimap-border {
+    display: none;
+    position: absolute;
+    bottom: 35px;
+    left: 12px;
+    width: 300px;
+    height: 220px;
+    border: 2px solid #e0e8ff;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(224, 232, 255, 0.4), inset 0 0 10px rgba(224, 232, 255, 0.1);
+    z-index: 1;
+    animation: map-glow 2.5s infinite ease-in-out;
+}
+
+@keyframes map-glow {
+    0% {
+        opacity: 0.7;
+        box-shadow: 0 0 10px rgba(224, 232, 255, 0.3);
+    }
+
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(224, 232, 255, 0.6);
+    }
+
+    100% {
+        opacity: 0.7;
+        box-shadow: 0 0 10px rgba(224, 232, 255, 0.3);
+    }
+}
+
+@keyframes sirens {
+    0% {
+        border-color: #ff3232;
+        box-shadow: 0 0 30px rgba(255, 50, 50, 0.8), inset 0 0 15px rgba(255, 50, 50, 0.4);
+    }
+
+    50% {
+        border-color: #3232ff;
+        box-shadow: 0 0 30px rgba(50, 50, 255, 0.8), inset 0 0 15px rgba(50, 50, 255, 0.4);
+    }
+
+    100% {
+        border-color: #ff3232;
+        box-shadow: 0 0 30px rgba(255, 50, 50, 0.8), inset 0 0 15px rgba(255, 50, 50, 0.4);
+    }
+}
+
+.sirens-active {
+    animation: sirens 0.6s infinite steps(2) !important;
+}
+
+
+/* Voice Vertical Bar (Azul de al lado) */
+.vertical-bar-container {
+    width: 6px;
+    height: 55px;
+    background: rgba(45, 45, 45, 0.8);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vertical-fill {
+    width: 100%;
+    height: 0%;
+    background: #ffffff;
+    /* Blanco por defecto */
+    position: absolute;
+    bottom: 0;
+    transition: height 0.3s ease, background 0.3s ease;
+}
+
+.talking-fill {
+    background: #ffea00 !important;
+    /* Amarillo al hablar */
+}
+
+/* Main Content Area */
+#hud-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Icon Boxes (Vida, Armadura, Comida, Agua) */
+#boxes-row {
+    display: flex;
+    gap: 6px;
+}
+
+.hud-box {
+    width: 44px;
+    height: 44px;
+    background: rgba(18, 18, 18, 0.9);
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.2);
+    /* Solo glow en contorno y suave interior */
+}
+
+.hud-box i {
+    z-index: 2;
+    font-size: 16px;
+    color: white;
+    opacity: 0.9;
+}
+
+.box-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+    transition: height 0.4s ease;
+}
+
+/* Stamina Horizontal Bar (Barra abajo) */
+.horizontal-bar-container {
+    width: 100%;
+    height: 6px;
+    /* Un poco más gruesa para el glow */
+    background: rgba(45, 45, 45, 0.8);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.horizontal-fill {
+    height: 100%;
+    width: 100%;
+    background: #00f2ff;
+    /* Zian (Cian) */
+    transition: width 0.4s ease;
+}
+
+
+#vehicle-hud-container {
+    display: none;
+    position: absolute;
+    left: 20px;
+    bottom: 95px;
+    /* Positioned above the player HUD */
+    font-family: 'alarm clock', sans-serif;
+    color: #ffffff;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    z-index: 101;
+    transition: left 0.5s ease-in-out, bottom 0.5s ease-in-out;
+}
+
+#vehicle-hud-container.map-active {
+    left: 350px;
+    /* Aligned with the shifted player HUD */
+    bottom: 110px;
+    /* Slightly higher to accommodate the boxes */
+}
+
+
+/* Gear Side Gauge */
+#gear-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+#gear-val {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    font-family: 'alarm clock', sans-serif;
+    margin-bottom: 2px;
+}
+
+#gear-val.reverse {
+    color: #ff3e3e;
+    text-shadow: 0 0 12px rgba(255, 62, 62, 0.6);
+}
+
+#gear-bar-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.gear-segment {
+    width: 10px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 1px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gear-segment.active {
+    background: #ffffff;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.gear-segment.reverse-active {
+    background: #ff3e3e;
+    box-shadow: 0 0 8px rgba(255, 62, 62, 0.5);
+}
+
+
+/* Speed Display */
+#speed-main {
+    width: 140px;
+    /* Fixed width to prevent shifting neighbors */
+    font-size: 85px;
+    line-height: 0.8;
+    color: #e0e8ff;
+    text-shadow: 0 0 15px rgba(224, 232, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    transform-origin: bottom center;
+    /* Scale grows from base without jumping */
+    transition: transform 0.1s ease-out;
+}
+
+
+#speed {
+    letter-spacing: -3px;
+}
+
+/* Status and Location */
+#status-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 5px;
+}
+
+#icons-row {
+    display: flex;
+    gap: 8px;
+}
+
+.info-box {
+    background: rgba(20, 21, 24, 0.95);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+}
+
+#seatbelt-info {
+    color: #ffffff;
+    /* Blanco por defecto */
+    border-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+#seatbelt-info.active {
+    background: #ffffff;
+    /* Se rellena de blanco */
+    color: #121212;
+    /* Icono oscuro para que resalte en el fondo blanco */
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+
+.info-box i {
+    font-size: 16px;
+}
+
+.fuel-info {
+    font-family: inherit;
+    font-weight: 500;
+}
+
+#location-row {
+    font-family: 'Inter', sans-serif;
+    /* Cleaner font for location */
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#location-row i {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+
+/* Animations for Low Status */
+@keyframes pulse-warning {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+        color: #ff3e3e;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes shake-warning {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-1px, 1px);
+    }
+
+    50% {
+        transform: translate(1px, -1px);
+    }
+
+    75% {
+        transform: translate(-1px, -1px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.warning-low {
+    animation: pulse-warning 1.5s infinite ease-in-out;
+}
+
+.warning-critical {
+    animation: pulse-warning 0.8s infinite ease-in-out, shake-warning 0.2s infinite linear;
+    color: #ff3e3e !important;
+}
