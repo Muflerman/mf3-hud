@@ -3,6 +3,8 @@
 A high-performance, minimalist Heads-Up Display (HUD) for FiveM, featuring a sleek modern design with advanced vehicle feedback systems.
 
 ## Features
+![47fb1c3cc3e62fe4dd636a1304b5eebc](https://github.com/user-attachments/assets/d94b445b-e543-4d2b-9fc4-066df6e58fba)
+![bf522da199d6f71f6ff5ef134320e6b6](https://github.com/user-attachments/assets/a3a92c40-242d-41af-bea9-5a8983aa84c3)
 
 ### Player HUD
 - **Minimalist Icon Boxes:** Vertical status bars for Health, Armor, Hunger, and Thirst integrated into clean, glowing boxes.
